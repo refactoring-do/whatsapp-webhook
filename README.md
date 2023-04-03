@@ -2,8 +2,22 @@
 
 ## Getting started
 
-```typescript
-import { Logger, Webhook } from "../src";
+1. Install dependecy
+
+```sh
+npm install @refactoring-do/whatsapp-webhook
+```
+
+2. Create a TypeScript file
+
+```sh
+  touch myWebhook.ts
+```
+
+3. Write the following code:
+
+```ts
+import { Logger, Webhook } from "@refactoring-do/whatsapp-webhook";
 
 const observer = (message: any) => {
   console.log(JSON.stringify(message));
@@ -23,6 +37,16 @@ const verificationToken = process.env["VERIFICATION_TOKEN"] as string;
   webhook.run().then(Logger.log).catch(Logger.error);
 })();
 ```
+
+4. Run the code
+
+```sh
+  ts-node myWebhook.ts
+```
+
+5. Output
+
+The server is listening on the provided port and ready to verify the WhatsApp Cloud API token.
 
 ## Debuggin
 
