@@ -1,6 +1,6 @@
 {
   "name": "@refactoring-do/whatsapp-webhook",
-  "version": "1.0.3",
+  "version": "1.0.0",
   "description": "WhatsApp Cloud API web hook in a nutshell",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
