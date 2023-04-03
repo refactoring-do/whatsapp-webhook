@@ -53,7 +53,7 @@ The server is listening on the provided port and ready to verify the WhatsApp Cl
 1. Install cloudflared CLI:
 
 ```sh
-    brew install cloudflared
+brew install cloudflared
 ```
 
 2. Run instance with a Cloudflare tunnel:

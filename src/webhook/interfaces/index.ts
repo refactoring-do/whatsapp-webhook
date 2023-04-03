@@ -1,1 +1,1 @@
-export { WebhookOptions } from "./webhook-options";
+export { WebhookOptions } from './webhook-options';

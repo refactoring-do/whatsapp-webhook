@@ -1,2 +1,2 @@
-export { LogLevel } from "./logger.enum";
-export { Logger } from "./logger";
+export { LogLevel } from './logger.enum';
+export { Logger } from './logger';

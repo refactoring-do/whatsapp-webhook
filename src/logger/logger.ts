@@ -1,4 +1,4 @@
-import { LogLevel } from "./logger.enum";
+import { LogLevel } from './logger.enum';
 
 export class Logger {
   static log(message: any): void {
