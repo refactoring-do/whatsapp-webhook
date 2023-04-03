@@ -2,9 +2,12 @@
   "name": "@refactoring-do/whatsapp-webhook",
   "version": "1.0.2",
   "description": "WhatsApp Cloud API web hook in a nutshell",
-  "main": "index.js",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "files": [
+    "lib/**/*"
+  ],
   "scripts": {
-    "start": "tsc && node dist/index.js",
     "test": "jest --config jestconfig.json --forceExit",
     "build": "tsc",
     "format": "prettier --write \"src/**/*.ts\"",
