@@ -1,0 +1,15 @@
+export enum MessageType {
+  message = 'message',
+  text = 'text',
+  image = 'image',
+  document = 'document',
+  audio = 'audio',
+  order = 'order',
+  video = 'video',
+  sticker = 'sticker',
+  location = 'location',
+  contacts = 'contacts',
+  interactive = 'interactive',
+  button_reply = 'button_reply',
+  list_reply = 'list_reply',
+}

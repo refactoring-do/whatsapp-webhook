@@ -9,8 +9,9 @@
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "strict": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "sourceMap": true
   },
-  "include": ["src"],
+  "include": ["src", "example"],
   "exclude": ["node_modules", "**/__tests__/*"]
 }

@@ -1,16 +1,16 @@
-import { Logger, Webhook } from "../src";
+import { ProcessedMessage } from 'src/webhook/interfaces';
+import { Logger, Webhook } from '../src/index';
 
-const observer = (message: any) => {
+const observer = (message: ProcessedMessage) => {
   console.log(JSON.stringify(message));
 };
 
-const port = +(process.env["PORT"] as string) || 3000;
-const verificationToken =
-  (process.env["VERIFICATION_TOKEN"] as string) || "qwertyuiop1234567890";
+const port = +(process.env['PORT'] as string) || 3000;
+const verificationToken = (process.env['VERIFICATION_TOKEN'] as string) || 'qwertyuiop1234567890';
 
 (async () => {
   const webhook = new Webhook({
-    endpoint: "/webhook",
+    endpoint: '/webhook',
     port,
     verificationToken,
     observer,

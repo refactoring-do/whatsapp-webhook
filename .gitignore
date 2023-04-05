@@ -4,6 +4,9 @@
 ## env
 *.env
 
+# vs
+.vscode
+
 ### Linux ###
 *~
 

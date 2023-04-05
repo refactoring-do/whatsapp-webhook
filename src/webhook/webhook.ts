@@ -1,6 +1,8 @@
 import { Request, Response } from 'express';
 
+import { ReceivedMessage } from './interfaces/received-message.interface';
 import { WebhookOptions } from './interfaces';
+import { MessageProccesor } from './utils';
 import { Server } from '../server/server';
 import { Logger } from '../logger';
 
@@ -38,7 +40,10 @@ export class Webhook {
 
       Logger.log('New message received');
 
-      this.options.observer(req.body['entry']);
+      const receivedMessage = req.body as ReceivedMessage;
+      const proccessedMessage = MessageProccesor.process(receivedMessage);
+
+      this.options.observer(proccessedMessage);
 
       return res.sendStatus(200);
     });
