@@ -12,6 +12,6 @@
     "skipLibCheck": true,
     "sourceMap": true
   },
-  "include": ["src", "example"],
-  "exclude": ["node_modules", "**/__tests__/*"]
+  "include": ["src", "index.ts"],
+  "exclude": ["node_modules", "tests", "example"]
 }
