@@ -45,9 +45,7 @@ export class MessageProccesor {
           from: currentMessage.from,
           name: messageAuthor,
           timestamp: currentMessage.timestamp,
-          data: {
-            ...(currentMessage[currentMessage.type].list_reply || currentMessage[currentMessage.type].button_reply),
-          },
+          data: currentMessage[currentMessage.type],
           type: MessageType[currentMessage.type as MessageType],
         };
 
