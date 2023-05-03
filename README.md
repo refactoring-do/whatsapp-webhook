@@ -1,7 +1,7 @@
 # WhatsApp Cloud API Webhook
 
 <p align="center">
-<img src="./assets/whatsapp-webhook.svg" width="300" alt="@refactoring-do/whatsapp-webhook" />
+<img src="./assets/logo.svg" width="300" alt="@refactoring-do/whatsapp-webhook" />
 </p>
 
 WhatsApp Cloud API Webhook for message subscriptions.
