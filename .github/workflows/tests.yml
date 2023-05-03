@@ -29,10 +29,3 @@ jobs:
 
       - name: Running unit tests
         run: npm test
-
-      - name: Running e2e tests
-        run: npm run test:e2e
-        env:
-          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
-          PHONE_NUMBER_ID: ${{ secrets.PHONE_NUMBER_ID }}
-          RECIPIENT_NUMBER: ${{ secrets.RECIPIENT_NUMBER }}
