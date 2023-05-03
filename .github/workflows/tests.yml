@@ -1,0 +1,38 @@
+name: Run unit and E2E tests
+
+on:
+  push:
+    branches:
+      - "*"
+    paths:
+      - '**.ts*'
+      - 'package*.json'
+      - '.github/workflows/tests.yml'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Running unit tests
+        run: npm test
+
+      - name: Running e2e tests
+        run: npm run test:e2e
+        env:
+          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+          PHONE_NUMBER_ID: ${{ secrets.PHONE_NUMBER_ID }}
+          RECIPIENT_NUMBER: ${{ secrets.RECIPIENT_NUMBER }}

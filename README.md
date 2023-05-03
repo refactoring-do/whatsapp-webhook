@@ -1,63 +1,75 @@
 # WhatsApp Cloud API Webhook
 
+<p align="center">
+<img src="./assets/whatsapp-webhook.svg" width="300" alt="@refactoring-do/whatsapp-webhook" />
+</p>
+
+WhatsApp Cloud API Webhook for message subscriptions.
+
+[![NPM Package](https://github.com/refactoring-do/whatsapp-webhook/actions/workflows/publish-package-npm.yml/badge.svg)](https://github.com/refactoring-do/whatsapp-webhook/blob/main/.github/workflows/publish-package-npm.yml)
+[![Tests](https://github.com/refactoring-do/whatsapp-webhook/actions/workflows/tests.yml/badge.svg)](https://github.com/refactoring-do/whatsapp-webhook/blob/main/.github/workflows/tests.yml)
+[![Linting and Formatting](https://github.com/refactoring-do/whatsapp-webhook/actions/workflows/lint-format.yml/badge.svg)](https://github.com/refactoring-do/whatsapp-webhook/blob/main/.github/workflows/lint-format.yml)
+
 ## Getting started
 
 1. Install dependecy
 
-```sh
-npm install @refactoring-do/whatsapp-webhook
-```
+    ```sh
+    npm install @refactoring/whatsapp-webhook
+    ```
 
-2. Create a TypeScript file
+2. Write the following code:
 
-```sh
-  touch myWebhook.ts
-```
+    ```js
+    import { Logger, Webhook, ProcessedMessage } from "@refactoring/whatsapp-webhook";
 
-3. Write the following code:
+    const observer = (message: any) => {
+      console.log(JSON.stringify(message));
+    };
 
-```ts
-import { Logger, Webhook } from "@refactoring-do/whatsapp-webhook";
+    const port = +process.env['PORT'] || 3000;
+    const verificationToken = process.env['VERIFICATION_TOKEN'] || 'qwertyuiop1234567890';
 
-const observer = (message: any) => {
-  console.log(JSON.stringify(message));
-};
+    (async () => {
+      const webhook = new Webhook({
+        endpoint: '/webhook',
+        port,
+        verificationToken,
+        observer,
+      });
 
-const port = +(process.env["PORT"] as string);
-const verificationToken = process.env["VERIFICATION_TOKEN"] as string;
+      webhook.run().then(Logger.log).catch(Logger.error);
+    })();
+    ```
 
-(async () => {
-  const webhook = new Webhook({
-    endpoint: "/webhook",
-    port,
-    verificationToken,
-    observer,
-  });
+3. Run the code
 
-  webhook.run().then(Logger.log).catch(Logger.error);
-})();
-```
+    ```sh
+      node webhook.js
+    ```
 
-4. Run the code
+4. Output
 
-```sh
-  ts-node myWebhook.ts
-```
-
-5. Output
-
-The server is listening on the provided port and ready to verify the WhatsApp Cloud API token.
+    The server is listening on the provided port and ready to verify the WhatsApp Cloud API token and receive messages.
 
 ## Debuggin
 
 1. Install cloudflared CLI:
 
-```sh
-brew install cloudflared
-```
+    ```sh
+    brew install cloudflared
+    ```
 
 2. Run instance with a Cloudflare tunnel:
 
-```sh
-cloudflared tunnel --url localhost:9000   
-```
+    ```sh
+    cloudflared tunnel --url localhost:3000   
+    ```
+
+3. Write message to the bot and wait for the webhook subscription.
+
+### Credits
+
+This package has been inspired by the [official WhatsApp Cloud API for Node.js](https://github.com/WhatsApp/WhatsApp-Nodejs-SDK). A few improvements and facilities have been added.
+
+Made with ❤️ by [Refactoring, SRL](https://refactoring.do)

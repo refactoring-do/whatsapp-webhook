@@ -1,55 +1,72 @@
-import { Request, Response } from 'express';
+import { IncomingMessage, ServerResponse } from 'node:http';
 
 import { ReceivedMessage } from './interfaces/received-message.interface';
 import { WebhookOptions } from './interfaces';
 import { MessageProccesor } from './utils';
-import { Server } from '../server/server';
+import { HttpServer } from '../server';
 import { Logger } from '../logger';
 
 export class Webhook {
   constructor(private readonly options: WebhookOptions) {}
 
   async run() {
-    const server = new Server();
+    const server = new HttpServer();
 
-    server.instance.get(this.options.endpoint, (req: Request, res: Response) => {
-      const verifyToken = req.query['hub.verify_token'];
-      const challenge = req.query['hub.challenge'];
+    server.get(this.options.endpoint, (req: IncomingMessage, res: ServerResponse) => {
+      Logger.log('Entro');
+      const requestPath = new URL(req.url as string, `https://${req.headers.host}`);
+
+      const verifyToken = requestPath.searchParams.get('hub.verify_token');
+      const challenge = requestPath.searchParams.get('hub.challenge');
 
       if (verifyToken && verifyToken === this.options.verificationToken) {
-        return res.status(200).send(challenge);
+        res.write(challenge);
+        Logger.log('Cloud API Token has been successfully verified.');
+      } else {
+        res.writeHead(400);
       }
 
-      Logger.log('Cloud API Token has been successfully verified.');
-
-      return res.sendStatus(400);
+      return res.end();
     });
 
-    server.instance.post(this.options.endpoint, (req: Request, res: Response) => {
-      const isInvalidMessage = !req.body.object || !req.body.entry?.[0]?.changes?.[0]?.value;
+    server.post(this.options.endpoint, (req: IncomingMessage, res: ServerResponse) => {
+      let body: any = '';
 
-      if (isInvalidMessage) {
-        return res.sendStatus(400);
-      }
+      req.on('data', (chunk: any) => {
+        body += chunk.toString();
+      });
 
-      const isStatusMessage = req.body?.entry?.[0]?.changes?.[0]?.value?.statuses;
+      req.on('end', () => {
+        body = JSON.parse(body);
 
-      if (isStatusMessage) {
-        return res.sendStatus(202);
-      }
+        const isInvalidMessage = !body.object || !body.entry?.[0]?.changes?.[0]?.value;
 
-      Logger.log('New message received');
+        if (isInvalidMessage) {
+          res.writeHead(400);
+          return res.end();
+        }
 
-      const receivedMessage = req.body as ReceivedMessage;
-      const proccessedMessage = MessageProccesor.process(receivedMessage);
+        const isStatusMessage = body?.entry?.[0]?.changes?.[0]?.value?.statuses;
 
-      this.options.observer(proccessedMessage);
+        if (isStatusMessage) {
+          res.writeHead(202);
+          return res.end();
+        }
 
-      return res.sendStatus(200);
+        Logger.log('New message received');
+
+        const receivedMessage = body as ReceivedMessage;
+        const proccessedMessage = MessageProccesor.process(receivedMessage);
+
+        this.options.observer(proccessedMessage);
+
+        res.writeHead(200);
+        return res.end();
+      });
     });
 
     return new Promise((resolve) => {
-      server.instance.listen(this.options.port, () => {
+      server.listen(this.options.port, () => {
         resolve(`Webhook is running on port ${this.options.port}`);
       });
     });
