@@ -10,9 +10,11 @@ WhatsApp Cloud API Webhook for message subscriptions.
 [![Tests](https://github.com/refactoring-do/whatsapp-webhook/actions/workflows/tests.yml/badge.svg)](https://github.com/refactoring-do/whatsapp-webhook/blob/main/.github/workflows/tests.yml)
 [![Linting and Formatting](https://github.com/refactoring-do/whatsapp-webhook/actions/workflows/lint-format.yml/badge.svg)](https://github.com/refactoring-do/whatsapp-webhook/blob/main/.github/workflows/lint-format.yml)
 
-## Getting started
+## Getting Started
 
-1. Install dependecy
+Follow these steps to set up the WhatsApp Cloud API Webhook for message subscriptions.
+
+1. Install dependency
 
     ```sh
     npm install @refactoring/whatsapp-webhook
@@ -45,31 +47,33 @@ WhatsApp Cloud API Webhook for message subscriptions.
 3. Run the code
 
     ```sh
-      node webhook.js
+    node webhook.js
     ```
 
 4. Output
 
-    The server is listening on the provided port and ready to verify the WhatsApp Cloud API token and receive messages.
+    The server is now listening on the provided port and is ready to verify the WhatsApp Cloud API token and receive messages.
 
-## Debuggin
+## Debugging
 
-1. Install cloudflared CLI:
+Follow these steps to debug the WhatsApp Cloud API Webhook:
+
+1. Install Cloudflare's CLI `(cloudflared)`:
 
     ```sh
     brew install cloudflared
     ```
 
-2. Run instance with a Cloudflare tunnel:
+2. Run an instance with a Cloudflare tunnel:
 
     ```sh
     cloudflared tunnel --url localhost:3000   
     ```
 
-3. Write message to the bot and wait for the webhook subscription.
+3. Send a message to the bot and wait for the webhook subscription.
 
 ### Credits
 
-This package has been inspired by the [official WhatsApp Cloud API for Node.js](https://github.com/WhatsApp/WhatsApp-Nodejs-SDK). A few improvements and facilities have been added.
+This package has been inspired by the [official WhatsApp Cloud API for Node.js](https://github.com/WhatsApp/WhatsApp-Nodejs-SDK). It includes several improvements and enhancements.
 
 Made with ❤️ by [Refactoring, SRL](https://refactoring.do)
